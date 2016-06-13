@@ -31,8 +31,12 @@ module.exports = {
             //Example:
             //NameModule: 'path of own module to include'
             //NOTE: DO NOT USE ./
-            applicationStyles: 'src/styles/app.scss'
+            applicationStyles: 'src/styles/app.scss',
+            routes: 'src/routes/routes.jsx',
+            App: 'src/App.jsx'
         },
+        //import modules without specifying aliases (must include node_modules)
+        modulesDirectories: ['node_modules', './src/components'],
         extensions:['', '.js', '.jsx']
     },
     module: {
