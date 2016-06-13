@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TodoList from 'TodoList';
+import AddTodo from 'AddTodo';
 
 class Main extends React.Component {
     constructor() {
@@ -25,6 +26,13 @@ class Main extends React.Component {
                 }
             ]
         };
+
+        this.handleAddTodo = this.handleAddTodo.bind(this);
+    }
+
+    handleAddTodo(todo) {
+        const nextTodo = {id: this.state.todos.length + 1, text: todo};
+        this.setState({todos: this.state.todos.concat([nextTodo])});
     }
 
     render() {
@@ -32,6 +40,7 @@ class Main extends React.Component {
         return (
             <div>
                 <TodoList todos={todos}/>
+                <AddTodo onAddTodo={this.handleAddTodo}/>
             </div>
         );
     }
