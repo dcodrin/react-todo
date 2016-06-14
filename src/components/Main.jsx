@@ -1,4 +1,5 @@
 import React from 'react';
+import uuid from 'node-uuid';
 
 import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
@@ -6,19 +7,19 @@ import SearchTodo from 'SearchTodo';
 
 const todos = [
     {
-        id: 1,
+        id: uuid(),
         text: 'Eat burger'
     },
     {
-        id: 2,
+        id: uuid(),
         text: 'Drink some coke'
     },
     {
-        id: 3,
+        id: uuid(),
         text: 'Get more burgers'
     },
     {
-        id: 4,
+        id: uuid(),
         text: 'Put checkup and eat everything!'
     }
 ];
@@ -36,8 +37,8 @@ class Main extends React.Component {
     }
 
     handleAddTodo(todo) {
-        const nextTodo = {id: this.state.todos.length + 1, text: todo};
-        this.setState({todos: this.state.todos.concat([nextTodo])});
+        const nextTodo = {id: uuid(), text: todo};
+        this.setState({todos: [...this.state.todos, nextTodo]});
     }
 
     handleSearchTodos(showCompleted, searchTodo) {
