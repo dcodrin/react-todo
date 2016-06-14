@@ -21,4 +21,14 @@ describe('Main', () => {
 
         expect(findMatch).toBeMoreThan(-1);
     });
+
+    it('should toggle completed value when handleToggle is called', () => {
+        const todoData = {id: 11, text: 'testing', completed: false};
+        const main = TestUtils.renderIntoDocument(<Main />);
+        main.setState({todos: [todoData]});
+
+        expect(main.state.todos[0].completed).toBe(false);
+        main.handleToggle(11);
+        expect(main.state.todos[0].completed).toBe(true);
+    });
 });
