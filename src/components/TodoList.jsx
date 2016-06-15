@@ -4,28 +4,13 @@ import Todo from 'Todo';
 
 class TodoList extends React.Component {
     render() {
-        const {todos, showCompleted} = this.props;
-
-        const renderTodos = () => {
-            let todosToRender = [];
-            if(showCompleted){
-                todos.forEach((todo) => {
-                    if(todo.completed){
-                        todosToRender.push(<Todo onToggle={this.props.onToggle} key={todo.id} {...todo}/>);
-                    }
-                });
-            } else {
-                 todos.forEach((todo) =>{
-                    todosToRender.push(<Todo onToggle={this.props.onToggle} key={todo.id} {...todo}/>);
-                });
-            }
-
-            return todosToRender;
-        };
+        const {todos} = this.props;
 
         return (
             <div>
-                {renderTodos()}
+                { todos.map((todo) =>{
+                    return (<Todo onToggle={this.props.onToggle} key={todo.id} {...todo}/>);
+                })}
             </div>
         );
     }
