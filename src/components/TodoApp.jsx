@@ -1,5 +1,6 @@
 import React from 'react';
 import uuid from 'node-uuid';
+import moment from 'moment';
 
 import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
@@ -21,7 +22,13 @@ class TodoApp extends React.Component {
     }
 
     handleAddTodo(todo) {
-        const nextTodo = {id: uuid(), text: todo, completed: false};
+        const nextTodo = {
+            id: uuid(),
+            text: todo,
+            completed: false,
+            createdAt: moment().unix(),
+            completedAt: ''
+        };
         TodoApi.setTodos([...this.state.todos, nextTodo]);
         this.setState({todos: [...this.state.todos, nextTodo]});
     }
@@ -30,10 +37,11 @@ class TodoApp extends React.Component {
       this.setState({showCompleted, searchTodo});
     }
 
-    handleToggle(id) {
+    handleToggle(id, completedAt) {
         var updatedTodos = this.state.todos.map((todo) => {
             if (todo.id === id) {
                 todo.completed = !todo.completed;
+                todo.completedAt = todo.completed ? completedAt : '';
             }
             return todo;
         });
