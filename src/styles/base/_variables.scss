@@ -1,0 +1,16 @@
+// Colors
+$main-color: #4B1166;
+$main-font-color: #eee;
+$secondary-color: #3FEFC1;
+
+//Buttons
+$btn-delete: #F32645;
+$btn-edit: #FDC42C;
+$btn-submit: #BBD713;
+
+//Input
+$input-border-color: darken($secondary-color, 20%);
+
+//Container
+$container-background: $main-color;
+$container-border: $secondary-color;

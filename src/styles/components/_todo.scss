@@ -1,0 +1,31 @@
+.todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+  transition: background 0.3s ease;
+
+  p, input {
+    margin: 0;
+  }
+  input {
+    cursor: pointer;
+  }
+  > :first-child {
+    margin-right: 1rem;
+  }
+  &:hover {
+    background-color: lighten($container-background, 15%);
+  }
+}
+
+.todo__subtext {
+  font-size: 0.8rem;
+}
+
+.todo-completed {
+  p, .todo__subtext {
+    color: lighten($main-font-color, 10%);
+    text-decoration: line-through;
+  }
+}

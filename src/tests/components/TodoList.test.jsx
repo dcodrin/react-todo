@@ -27,4 +27,13 @@ describe('TodoList', () => {
 
         expect(todosComponents.length).toBe(todos.length);
     });
+
+    it('should render sarcasm if no todos', () => {
+        const todos = [];
+
+        const todoList = TestUtils.renderIntoDocument(<TodoList todos={todos}/>);
+        const $el = $(ReactDOM.findDOMNode(todoList));
+
+        expect($el.find('.container__message').length).toBe(1);
+    });
 });

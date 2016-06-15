@@ -25,10 +25,10 @@ class AddTodo extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container__footer">
                 <form onSubmit={this.handleSubmit}>
                     <input ref="todoText" onChange={this.handleChange} value={this.state.todoText} type="text" placeholder="Add new todo"/>
-                    <button className="button extended">Add Todo</button>
+                    <button className="button expanded">Add Todo</button>
                 </form>
             </div>
         );
