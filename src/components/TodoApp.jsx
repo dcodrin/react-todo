@@ -4,35 +4,13 @@ import uuid from 'node-uuid';
 import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
 import SearchTodo from 'SearchTodo';
+import TodoApi from 'TodoApi';
 
-const todos = [
-    {
-        id: uuid(),
-        text: 'Eat burger',
-        completed: true
-    },
-    {
-        id: uuid(),
-        text: 'Drink some coke',
-        completed: true
-    },
-    {
-        id: uuid(),
-        text: 'Get more burgers',
-        completed: true
-    },
-    {
-        id: uuid(),
-        text: 'Put checkup and eat everything!',
-        completed: false
-    }
-];
-
-class Main extends React.Component {
+class TodoApp extends React.Component {
     constructor() {
         super();
         this.state = {
-            todos: todos,
+            todos: TodoApi.getTodos(),
             showCompleted: false
         };
 
@@ -43,11 +21,12 @@ class Main extends React.Component {
 
     handleAddTodo(todo) {
         const nextTodo = {id: uuid(), text: todo, completed: false};
+        TodoApi.setTodos([...this.state.todos, nextTodo]);
         this.setState({todos: [...this.state.todos, nextTodo]});
     }
 
     handleSearchTodos(showCompleted, searchTodo) {
-        const filteredTodos = todos.filter((todo) => {
+        const filteredTodos = this.state.todos.filter((todo) => {
             return todo.text.toLowerCase().indexOf(searchTodo.toLowerCase()) > -1;
         });
 
@@ -80,7 +59,7 @@ class Main extends React.Component {
 }
 
 
-Main.propTypes = {};
-Main.defaultProps = {};
+TodoApp.propTypes = {};
+TodoApp.defaultProps = {};
 
-export default Main;
+export default TodoApp;

@@ -1,11 +1,11 @@
 import React from 'react';
 import {Route, Router, IndexRoute, hashHistory} from 'react-router';
 
-import Main from 'Main';
+import TodoApp from 'TodoApp';
 
 const routes = (
     <Router history={hashHistory}>
-        <Route path="/" component={Main}>
+        <Route path="/" component={TodoApp}>
         </Route>
     </Router>
 );

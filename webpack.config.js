@@ -36,7 +36,7 @@ module.exports = {
             App: 'src/App.jsx'
         },
         //import modules without specifying aliases (must include node_modules)
-        modulesDirectories: ['node_modules', './src/components'],
+        modulesDirectories: ['node_modules', './src/components', './src/api'],
         extensions:['', '.js', '.jsx']
     },
     module: {
