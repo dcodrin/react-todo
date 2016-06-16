@@ -14,10 +14,10 @@ describe('Actions', () => {
     it('should generate a create todo action', () => {
         const action = {
             type: 'ADD_TODO',
-            todo: 'Become billionaire'
+            text: 'Become billionaire'
         };
 
-        const res = addTodo(action.todo);
+        const res = addTodo(action.text);
         expect(res).toEqual(action);
     });
 
