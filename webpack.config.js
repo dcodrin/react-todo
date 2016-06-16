@@ -33,7 +33,8 @@ module.exports = {
             //NOTE: DO NOT USE ./
             applicationStyles: 'src/styles/app.scss',
             routes: 'src/routes/routes.jsx',
-            App: 'src/App.jsx'
+            App: 'src/App.jsx',
+            actions: 'src/actions/actions.jsx'
         },
         //import modules without specifying aliases (must include node_modules)
         modulesDirectories: ['node_modules', './src/components', './src/api'],
