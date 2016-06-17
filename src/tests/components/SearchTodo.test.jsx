@@ -4,7 +4,7 @@ import TestUtils from 'react-addons-test-utils';
 import $ from 'jquery';
 import expect from 'expect';
 
-import SearchTodo from 'SearchTodo';
+import SearchTodo, {SearchTodo as UnconnectedSearchTodo} from 'SearchTodo';
 
 describe('SearchTodo', () => {
 
@@ -12,21 +12,29 @@ describe('SearchTodo', () => {
         expect(SearchTodo).toExist();
     });
 
-    it('should call this.props.onSearchTodos with input text', () => {
+    it('should dispatch SEARCH_TEXT action with input text payload', () => {
         const searchText = 'get';
         const spy = expect.createSpy();
-        const searchTodo = TestUtils.renderIntoDocument(<SearchTodo onSearchTodos={spy}/>);
+        const searchTodo = TestUtils.renderIntoDocument(<UnconnectedSearchTodo dispatch={spy}/>);
+
+        const action = {
+            type: 'SEARCH_TEXT',
+            searchText
+        };
 
         searchTodo.refs.searchTodo.value = searchText;
         TestUtils.Simulate.change(searchTodo.refs.searchTodo);
-        expect(spy).toHaveBeenCalledWith(false, 'get');
+        expect(spy).toHaveBeenCalledWith(action);
     });
 
-    it('should call this.props.onSearchTodos with the proper checked value', () => {
+    it('should dispatch SHOW_COMPLETED with the proper checked value', () => {
         const spy = expect.createSpy();
-        const searchTodo = TestUtils.renderIntoDocument(<SearchTodo onSearchTodos={spy}/>);
+        const searchTodo = TestUtils.renderIntoDocument(<UnconnectedSearchTodo dispatch={spy}/>);
+        const action = {
+            type: 'SHOW_COMPLETED'
+        };
         searchTodo.refs.showCompleted.checked = true;
         TestUtils.Simulate.change(searchTodo.refs.showCompleted);
-        expect(spy).toHaveBeenCalledWith(true, '');
+        expect(spy).toHaveBeenCalledWith(action);
     });
 });
