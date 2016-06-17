@@ -21,14 +21,7 @@ describe('TodoList', () => {
             completed: false,
             completedAt: '',
             createdAt: 500
-        }, {
-            id: 2,
-            text: 'test 2',
-            completed: true,
-            completedAt: '',
-            createdAt: 2500
         }];
-
         const store = configureStore({todos});
         const provider = TestUtils.renderIntoDocument(
             <Provider store={store}>
