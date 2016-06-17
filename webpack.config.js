@@ -35,7 +35,8 @@ module.exports = {
             routes: 'src/routes/routes.jsx',
             App: 'src/App.jsx',
             actions: 'src/actions/actions.jsx',
-            reducers: 'src/reducers/reducers.jsx'
+            reducers: 'src/reducers/reducers.jsx',
+            configureStore: 'src/store/configureStore.jsx'
         },
         //import modules without specifying aliases (must include node_modules)
         modulesDirectories: ['node_modules', './src/components', './src/api'],

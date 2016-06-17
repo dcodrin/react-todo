@@ -11,4 +11,17 @@ $(document).foundation();
 //Routes
 import routes from 'routes';
 
-ReactDOM.render(routes, document.querySelector('#app'));
+//Actions
+import {addTodo, toggleCompleted, showCompleted, setSearchText} from 'actions';
+
+//Store
+import configureStore from 'configureStore';
+
+const store = configureStore();
+
+store.subscribe(() => {
+    console.log('New State', store.getState());
+});
+
+
+ReactDOM.render(routes(store), document.querySelector('#app'));

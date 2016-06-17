@@ -1,9 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 
-class Todo extends React.Component {
+import {connect} from 'react-redux';
+import {toggleCompleted} from 'actions';
+
+//export Todo for testing purposes
+export class Todo extends React.Component {
     render() {
-        const {id, text, completed, createdAt, completedAt} = this.props;
+        const {id, text, completed, createdAt, completedAt, dispatch} = this.props;
 
         const todoClassName = completed ? 'todo todo-completed' : 'todo';
 
@@ -29,7 +33,7 @@ class Todo extends React.Component {
                 <div>
                     <input onChange={(e) => {
                     e.stopPropagation();
-                    this.props.onToggle(id, moment().unix());
+                    dispatch(toggleCompleted(id));
                 }} type="checkbox" checked={completed}/>
                 </div>
             </div>
@@ -40,4 +44,7 @@ class Todo extends React.Component {
 Todo.propTypes = {};
 Todo.defaultProps = {};
 
-export default Todo;
+//connect gives us access to dispatch by default
+export default connect()(Todo);
+
+
