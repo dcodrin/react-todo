@@ -31,6 +31,7 @@ module.exports = {
             //Example:
             //NameModule: 'path of own module to include'
             //NOTE: DO NOT USE ./
+            firebaseConfig: 'src/firebase/index.js',
             applicationStyles: 'src/styles/app.scss',
             routes: 'src/routes/routes.jsx',
             App: 'src/App.jsx',

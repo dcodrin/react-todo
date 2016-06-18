@@ -4,7 +4,7 @@ import TestUtils from 'react-addons-test-utils';
 import $ from 'jquery';
 import expect from 'expect';
 
-
+import {startAddTodo} from 'actions';
 import AddTodo, {AddTodo as UnconnectedAddTodo} from 'AddTodo';
 
 describe('AddTodo', () => {
@@ -15,10 +15,7 @@ describe('AddTodo', () => {
     it('should dispatch the action ADD_TODO if the data is valid', () => {
         const spy = expect.createSpy();
         const testText = 'buy some milk and cookies. mmmm cookies...';
-        const action = {
-            type: 'ADD_TODO',
-            text: testText
-        };
+        const action = startAddTodo(testText);
 
         const addTodo = TestUtils.renderIntoDocument(<UnconnectedAddTodo dispatch={spy}/>);
         const $el = $(ReactDOM.findDOMNode(addTodo));

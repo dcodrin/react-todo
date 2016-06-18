@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 import {connect} from 'react-redux';
-import {toggleCompleted} from 'actions';
+import {startToggleTodo} from 'actions';
 
 //export Todo for testing purposes
 export class Todo extends React.Component {
@@ -33,7 +33,7 @@ export class Todo extends React.Component {
                 <div>
                     <input onChange={(e) => {
                     e.stopPropagation();
-                    dispatch(toggleCompleted(id));
+                    dispatch(startToggleTodo(id, !completed));
                 }} type="checkbox" checked={completed}/>
                 </div>
             </div>

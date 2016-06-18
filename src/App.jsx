@@ -9,6 +9,8 @@ import 'style!css!sass!applicationStyles';
 //Launch foundation
 $(document).foundation();
 
+import './../playground/index.js';
+
 //Routes
 import routes from 'routes';
 

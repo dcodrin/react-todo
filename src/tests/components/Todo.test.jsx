@@ -6,6 +6,7 @@ import expect from 'expect';
 import moment from 'moment';
 
 import {Todo} from 'Todo';
+import * as actions from 'actions';
 
 describe('Todo', () => {
     it('should exist', () => {
@@ -19,14 +20,14 @@ describe('Todo', () => {
             completed: true,
             completedAt: ''
         };
+
+        const action = actions.startToggleTodo(todoData.id, !todoData.completed);
+
         const spy = expect.createSpy();
         const todo = TestUtils.renderIntoDocument(<Todo {...todoData} dispatch={spy} />);
         const $el = $(ReactDOM.findDOMNode(todo));
         TestUtils.Simulate.change($el.find('input')[0]);
 
-        expect(spy).toHaveBeenCalledWith({
-            type: 'TOGGLE_COMPLETED',
-            id: todoData.id
-        });
+        expect(spy).toHaveBeenCalledWith(action);
     });
 });

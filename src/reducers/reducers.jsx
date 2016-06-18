@@ -21,28 +21,21 @@ export const showCompletedReducer = (state = false, action) => {
 
 export const todosReducer = (state = [], action) => {
     switch (action.type) {
-        case 'TOGGLE_COMPLETED':
+        case 'UPDATE_TODO':
             return state.map(todo => {
                 if(todo.id === action.id){
-                    const checkCompleted = !todo.completed;
                     return {
                         ...todo,
-                        completed: checkCompleted,
-                        completedAt: checkCompleted ? moment().unix() : undefined
+                        ...action.updates
                     };
                 } else {
                     return todo;
                 }
             });
         case 'ADD_TODO':
-            return [...state,
-                {
-                    id: uuid(),
-                    text: action.text,
-                    completed: false,
-                    createdAt: moment().unix(),
-                    completedAt: ''
-                }
+            return [
+                ...state,
+                action.todo
             ];
         case 'ADD_TODOS':
             return [
