@@ -37,6 +37,8 @@ export const todosReducer = (state = [], action) => {
                 ...state,
                 action.todo
             ];
+        case 'DELETE_TODO':
+            return [...state.filter(todo => todo.id !== action.id)];
         case 'ADD_TODOS':
             return [
                 ...state,

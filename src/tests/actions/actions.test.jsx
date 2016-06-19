@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import firebase, {firebaseRef} from 'firebaseConfig';
 
-import {startToggleTodo, updateTodo, setSearchText, addTodo, toggleCompleted, showCompleted, addTodos, startAddTodo} from 'actions';
+import {startToggleTodo, updateTodo, setSearchText, addTodo, toggleCompleted, showCompleted, addTodos, startAddTodo, startAddTodos, startDeleteTodo, deleteTodo} from 'actions';
 
 const createMockStore = configureMockStore([thunk]);
 
@@ -52,13 +52,13 @@ describe('Actions', () => {
     });
 
     it('should generate an UPDATE_TODO action', () => {
-       const action = {
-           type: 'UPDATE_TODO',
-           id: '123',
-           updates: {
-               completed: false
-           }
-       };
+        const action = {
+            type: 'UPDATE_TODO',
+            id: '123',
+            updates: {
+                completed: false
+            }
+        };
 
         const res = updateTodo(action.id, action.updates);
         expect(res).toEqual(action);
@@ -84,17 +84,31 @@ describe('Actions', () => {
         expect(res).toEqual(action);
     });
 
+    it('should dispatch deleteTodo action', () => {
+        const todos = [{id: 1}, {id: 2}];
+        const action = {
+            type: 'DELETE_TODO',
+            id: todos[0].id
+        };
+
+        const res = deleteTodo(todos[0].id);
+        expect(res).toEqual(action);
+    });
+
     describe('Tests with firebase todos', () => {
         let testTodoRef;
 
         beforeEach((done) => {
-            firebaseRef.child('todos').push({
-                text: 'Testing firebase todo',
-                completed: false,
-                createdAt: 0
-            }).then((snapshot) => {
-                testTodoRef = snapshot;
-                done();
+
+            firebaseRef.remove().then(() => {
+                firebaseRef.child('todos').push({
+                    text: 'Testing firebase todo',
+                    completed: false,
+                    createdAt: 0
+                }).then((snapshot) => {
+                    testTodoRef = snapshot;
+                    done();
+                });
             });
         });
 
@@ -116,6 +130,33 @@ describe('Actions', () => {
                     completed: true
                 });
                 expect(mockActions[0].updates.completedAt).toExist();
+                done();
+            }, done);
+        });
+
+        it('should populate todos and dispatch ADD_TODOS', (done) => {
+            const store = createMockStore({});
+            const action = startAddTodos();
+            store.dispatch(action).then(() => {
+                const mockActions = store.getActions();
+                expect(mockActions[0]).toInclude({
+                    type: 'ADD_TODOS'
+                });
+                expect(mockActions[0].todos.length).toBeGreaterThan(0);
+                expect(mockActions[0].todos[0].text).toEqual('Testing firebase todo');
+                done();
+            },done);
+        });
+
+        it('should delete todo and dispatch DELETE_TODO action', (done) => {
+            const store = createMockStore({});
+            const action = startDeleteTodo(testTodoRef.key);
+            store.dispatch(action).then(() => {
+               const mockActions = store.getActions();
+                expect(mockActions[0]).toInclude({
+                    type: 'DELETE_TODO',
+                    id: testTodoRef.key
+                });
                 done();
             }, done);
         });

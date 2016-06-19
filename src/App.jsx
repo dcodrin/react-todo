@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {addTodos} from 'actions';
+import {addTodos, startAddTodos} from 'actions';
 
 //Load custom css using webpack aliases
 //Notice the usage of sass! loader
@@ -24,15 +24,6 @@ const store = configureStore();
 //TodoApi
 import TodoApi from 'TodoApi';
 
-store.subscribe(() => {
-    const state = store.getState();
-
-    TodoApi.setTodos(state.todos);
-
-    console.log('New State', state);
-});
-
-const initialTodos = TodoApi.getTodos();
-store.dispatch(addTodos(initialTodos));
+store.dispatch(startAddTodos());
 
 ReactDOM.render(routes(store), document.querySelector('#app'));

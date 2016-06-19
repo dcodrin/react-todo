@@ -7,19 +7,19 @@ import TodoApi from 'TodoApi';
 export class TodoList extends React.Component {
     render() {
         const {todos, showCompleted, searchText} = this.props;
-        if(todos.length === 0){
+        const todosToRender = TodoApi.filterTodos(todos, showCompleted, searchText).map((todo) =>{
+            return (<Todo key={todo.id} {...todo}/>);
+        });
+        if(todos.length === 0 || todosToRender.length === 0){
             return (
                 <div>
                     <p className="container__message">Such motivation. So many things todo. Much sarcasm I sense.</p>
                 </div>
             );
         }
-
         return (
             <div>
-                { TodoApi.filterTodos(todos, showCompleted, searchText).map((todo) =>{
-                    return (<Todo key={todo.id} {...todo}/>);
-                })}
+                {todosToRender}
             </div>
         );
     }

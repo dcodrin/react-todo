@@ -1,7 +1,7 @@
 .todo {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 1rem;
   transition: background 0.3s ease;
 
@@ -10,9 +10,6 @@
   }
   input {
     cursor: pointer;
-  }
-  > :first-child {
-    margin-right: 1rem;
   }
   &:hover {
     background-color: lighten($container-background, 15%);
@@ -23,9 +20,28 @@
   font-size: 0.8rem;
 }
 
+.todo__info {
+  flex-grow: 1;
+  padding: 0 1rem;
+  word-break:break-all;
+}
+
 .todo-completed {
   p, .todo__subtext {
     color: lighten($main-font-color, 10%);
     text-decoration: line-through;
+  }
+}
+
+.todo__delete {
+  min-width: 2rem;
+  margin-right: 0;
+  text-align: center;
+  transition: all 0.2s ease;
+  border-radius: 5px;
+  background-color: $btn-delete;
+  &:hover {
+    background-color: darken($btn-delete, 10%);
+    cursor: pointer;
   }
 }

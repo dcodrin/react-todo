@@ -58,6 +58,40 @@ export const addTodos = (todos) => {
     };
 };
 
+export const deleteTodo = (id) => {
+  return {
+      type: 'DELETE_TODO',
+      id
+  };
+};
+
+export const startDeleteTodo = (id) => {
+    return (dispatch, getState) => {
+      return firebaseRef.child(`todos/${id}`).remove().then(() => {
+          dispatch(deleteTodo(id));
+      });
+    };
+};
+
+export const startAddTodos = () => {
+    return (dispatch, getState) => {
+        return firebaseRef.child('todos').once('value').then((snapshot) => {
+            const todosObject = snapshot.val();
+            if(todosObject){
+                const todos = Object.keys(todosObject).map((id) => {
+                    return {
+                        id,
+                        ...todosObject[id]
+                    };
+                });
+                dispatch(addTodos(todos));
+            } else {
+                dispatch(addTodos([]));
+            }
+        });
+    };
+};
+
 export const startToggleTodo = (id, completed) => {
     return (dispatch, getState) => {
         const todoRef = firebaseRef.child(`todos/${id}`);
