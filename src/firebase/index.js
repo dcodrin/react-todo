@@ -3,7 +3,7 @@ import firebase from 'firebase';
 try {
     // Initialize Firebase
     const config = {
-        apiKey: process.env.API_KEY,
+        apiKey: 'AIzaSyCpAhkyL5t0tXXYm6kHqc50zl_4q1u72R8',
         authDomain: process.env.AUTH_DOMAIN,
         databaseURL: process.env.DATABASE_URL,
         storageBucket: process.env.STORAGE_BUCKET
