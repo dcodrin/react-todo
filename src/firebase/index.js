@@ -1,12 +1,14 @@
 import firebase from 'firebase';
 
+console.log(process.env.NODE_ENV ? 'YES' : 'NO');
+
 try {
     // Initialize Firebase
     const config = {
-        apiKey: "AIzaSyDSs1KuIeeXLUfDj27JS6iBeQN3FSG6QvE",
-        authDomain: "react-redux-todo-7ff8c.firebaseapp.com",
-        databaseURL: "https://react-redux-todo-7ff8c.firebaseio.com",
-        storageBucket: "react-redux-todo-7ff8c.appspot.com"
+        apiKey: process.env.API_KEY,
+        authDomain: process.env.AUTH_DOMAIN,
+        databaseURL: process.env.DATABASE_URL,
+        storageBucket: process.env.STORAGE_BUCKET
     };
     firebase.initializeApp(config);
 } catch (e) {
