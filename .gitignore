@@ -7,5 +7,4 @@
 
 /public/bundle.js
 /public/bundle.js.map
-
-config/
+/config/test.env
