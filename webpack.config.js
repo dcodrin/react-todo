@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var envFile = require('node-env-file');
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
     entry: [
@@ -14,7 +15,10 @@ module.exports = {
         //make jquery available globally through the var 'jQuery'
         jquery: 'jQuery'
     },
-    plugin: [
+    plugins: [
+        new webpack.DefinePlugin({
+            VERSION: "'SKYNET'"
+        }),
         //allows the usage of jquery module through '$' and 'jQuery' without importing the module
         new webpack.ProvidePlugin({
             //tell webpack to watch for '$' and 'jQuery' and replace those with jquery module
@@ -22,7 +26,7 @@ module.exports = {
             'jQuery': 'jquery'
         }),
         new webpack.optimize.UglifyJsPlugin({
-            compressor: {
+            compressor:{
                 warnings: false
             }
         })
@@ -72,5 +76,5 @@ module.exports = {
             path.resolve(__dirname, './node_modules/foundation-sites/scss')
         ]
     },
-    devtool:  process.env.NODE_ENV === 'production' ? undefined : 'source-map'
+    devtool: process.env.NODE_ENV === 'production' ? undefined : 'source-map'
 };
