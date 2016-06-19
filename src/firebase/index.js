@@ -2,7 +2,6 @@ import firebase from 'firebase';
 
 try {
     // Initialize Firebase
-    console.log(process.env);
     const config = {
         apiKey: process.env.API_KEY,
         authDomain: process.env.AUTH_DOMAIN,
