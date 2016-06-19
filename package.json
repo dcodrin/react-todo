@@ -1,12 +1,12 @@
 {
-  "name": "react-karma-boilerplate",
+  "name": "react-todo",
   "version": "1.0.0",
-  "description": "React boilerplate, with foundation and karma.",
+  "description": "React todo app, with foundation and mocha tests.",
   "main": "index.js",
   "scripts": {
-    "test": "karma start",
+    "test": "NODE_ENV=test karma start",
     "dev-server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline",
-    "deploy": "webpack && git add ./public/bundle.js ./public/bundle.js.map && git commit -am 'Generated production bundle.js' && git push heroku master",
+    "deploy": "webpack -p && git add ./public/bundle.js ./public/bundle.js.map && git commit -am 'Generated production bundle.js' && git push heroku master",
     "start": "node server.js"
   },
   "keywords": [
