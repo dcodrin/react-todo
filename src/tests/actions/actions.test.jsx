@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import firebase, {firebaseRef} from 'firebaseConfig';
 
-import {startToggleTodo, updateTodo, setSearchText, addTodo, toggleCompleted, showCompleted, addTodos, startAddTodo, startAddTodos, startDeleteTodo, deleteTodo, login, logout} from 'actions';
+import {startToggleTodo, updateTodo, setSearchText, addTodo, toggleCompleted, showCompleted, addTodos, startAddTodo, startAddTodos, startDeleteTodo, deleteTodo, login, logout, clearAllTodos} from 'actions';
 
 const createMockStore = configureMockStore([thunk]);
 
@@ -95,6 +95,14 @@ describe('Actions', () => {
         expect(res).toEqual(action);
     });
 
+    it('should generate clear todos action', () => {
+        const res = clearAllTodos();
+        const action = {
+            type: 'CLEAR_TODOS'
+        };
+        expect(res).toEqual(action);
+    });
+
     describe('Tests with firebase todos', () => {
         let testTodoRef, uid, todosRef;
 
@@ -170,14 +178,14 @@ describe('Actions', () => {
                 expect(mockActions[0].todos.length).toBeGreaterThan(0);
                 expect(mockActions[0].todos[0].text).toEqual('Testing firebase todo');
                 done();
-            },done);
+            }, done);
         });
 
         it('should delete todo and dispatch DELETE_TODO action', (done) => {
             const store = createMockStore({auth: {uid}});
             const action = startDeleteTodo(testTodoRef.key);
             store.dispatch(action).then(() => {
-               const mockActions = store.getActions();
+                const mockActions = store.getActions();
                 expect(mockActions[0]).toInclude({
                     type: 'DELETE_TODO',
                     id: testTodoRef.key

@@ -98,6 +98,15 @@ describe('Reducers', () => {
             expect(res.length).toEqual(1);
             expect(res[0].id).toEqual(todos[1].id);
         });
+
+        it('should clear all todos from state', () => {
+            const todos = [{id: 1}, {id: 2}];
+            const action = {
+                type: 'CLEAR_TODOS'
+            };
+            const res = todosReducer(df(todos), df(action));
+            expect(res).toEqual([]);
+        });
     });
 
     describe('authReducer', () => {
