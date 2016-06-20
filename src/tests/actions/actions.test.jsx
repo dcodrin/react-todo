@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import firebase, {firebaseRef} from 'firebaseConfig';
 
-import {startToggleTodo, updateTodo, setSearchText, addTodo, toggleCompleted, showCompleted, addTodos, startAddTodo, startAddTodos, startDeleteTodo, deleteTodo} from 'actions';
+import {startToggleTodo, updateTodo, setSearchText, addTodo, toggleCompleted, showCompleted, addTodos, startAddTodo, startAddTodos, startDeleteTodo, deleteTodo, login, logout} from 'actions';
 
 const createMockStore = configureMockStore([thunk]);
 
@@ -92,6 +92,25 @@ describe('Actions', () => {
         };
 
         const res = deleteTodo(todos[0].id);
+        expect(res).toEqual(action);
+    });
+
+    it('should generate login action', () => {
+        const uid = 'abc123';
+        const action = {
+            type: 'LOGIN',
+            uid
+        };
+
+        const res = login(uid);
+        expect(res).toEqual(action);
+    });
+
+    it('should generate logout action', () => {
+        const res = logout();
+        const action = {
+            type: 'LOGOUT'
+        };
         expect(res).toEqual(action);
     });
 

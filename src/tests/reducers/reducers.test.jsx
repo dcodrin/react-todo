@@ -4,7 +4,7 @@ import moment from 'moment';
 //deep-freeze checks for data mutation
 import df from 'deep-freeze-strict';
 
-import {searchTextReducer, showCompletedReducer, todosReducer} from 'reducers';
+import {searchTextReducer, showCompletedReducer, todosReducer, authReducer} from 'reducers';
 
 describe('Reducers', () => {
     describe('searchTextReducer', () => {
@@ -71,7 +71,13 @@ describe('Reducers', () => {
         });
 
         it('should add existing todos', () => {
-            const todos = [{id: 1, text: 'testing adding todos', completed: false, completedAt: undefined, createdAt: 500}];
+            const todos = [{
+                id: 1,
+                text: 'testing adding todos',
+                completed: false,
+                completedAt: undefined,
+                createdAt: 500
+            }];
             const action = {
                 type: 'ADD_TODOS',
                 todos
@@ -83,7 +89,7 @@ describe('Reducers', () => {
         });
 
         it('should delete todo and update state', () => {
-            const todos = [{id:1}, {id: 2}];
+            const todos = [{id: 1}, {id: 2}];
             const action = {
                 type: 'DELETE_TODO',
                 id: todos[0].id
@@ -91,6 +97,27 @@ describe('Reducers', () => {
             const res = todosReducer(df(todos), df(action));
             expect(res.length).toEqual(1);
             expect(res[0].id).toEqual(todos[1].id);
+        });
+    });
+
+    describe('authReducer', () => {
+        it('should set user', () => {
+            const action = {
+                type: 'LOGIN',
+                uid: 'abc123'
+            };
+
+            const res = authReducer(df({}), df(action));
+            expect(res).toEqual({uid: action.uid});
+        });
+
+        it('should clear user', () => {
+           const action = {
+               type: 'LOGOUT'
+           };
+
+            const res = authReducer(df({uid: 'abc123'}), df(action));
+            expect(res).toEqual({});
         });
     });
 });

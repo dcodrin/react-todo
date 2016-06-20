@@ -6,7 +6,7 @@ import expect from 'expect';
 import {Provider} from 'react-redux';
 import configureStore from 'configureStore';
 
-import TodoApp from 'TodoApp';
+import {TodoApp} from 'TodoApp';
 import TodoList from 'TodoList';
 describe('TodoApp', () => {
     it('should exist', () => {
