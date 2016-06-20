@@ -32,25 +32,6 @@ describe('Actions', () => {
         expect(res).toEqual(action);
     });
 
-    it('should create todo and dispatch addTodo', (done) => {
-        const store = createMockStore({});
-        const todoText = 'Test todo item';
-
-        store.dispatch(startAddTodo(todoText)).then(() => {
-            //use getActions for array of dispatched actions
-            const actions = store.getActions();
-            expect(actions[0]).toInclude({
-                type: 'ADD_TODO'
-            });
-            expect(actions[0].todo).toInclude({
-                text: todoText
-            });
-            done();
-        }).catch(() => {
-            done();
-        });
-    });
-
     it('should generate an UPDATE_TODO action', () => {
         const action = {
             type: 'UPDATE_TODO',
@@ -115,28 +96,53 @@ describe('Actions', () => {
     });
 
     describe('Tests with firebase todos', () => {
-        let testTodoRef;
+        let testTodoRef, uid, todosRef;
 
         beforeEach((done) => {
 
-            firebaseRef.remove().then(() => {
-                firebaseRef.child('todos').push({
-                    text: 'Testing firebase todo',
-                    completed: false,
-                    createdAt: 0
-                }).then((snapshot) => {
-                    testTodoRef = snapshot;
-                    done();
+            const credential = firebase.auth.GithubAuthProvider.credential(process.env.GITHUB_ACCESS_TOKEN);
+
+            firebase.auth().signInWithCredential(credential).then((user) => {
+                uid = user.uid;
+                todosRef = firebaseRef.child(`users/${uid}/todos`);
+                todosRef.remove().then(() => {
+                    todosRef.push({
+                        text: 'Testing firebase todo',
+                        completed: false,
+                        createdAt: 0
+                    }).then((snapshot) => {
+                        testTodoRef = snapshot;
+                        done();
+                    });
                 });
             });
         });
 
         afterEach((done) => {
-            testTodoRef.remove().then(() => done());
+            todosRef.remove().then(() => done());
+        });
+
+        it('should create todo and dispatch addTodo', (done) => {
+            const store = createMockStore({auth: {uid}});
+            const todoText = 'Test todo item';
+
+            store.dispatch(startAddTodo(todoText)).then(() => {
+                //use getActions for array of dispatched actions
+                const actions = store.getActions();
+                expect(actions[0]).toInclude({
+                    type: 'ADD_TODO'
+                });
+                expect(actions[0].todo).toInclude({
+                    text: todoText
+                });
+                done();
+            }).catch(() => {
+                done();
+            });
         });
 
         it('should toggle todo and dispatch UPDATE_TODO action', (done) => {
-            const store = createMockStore({});
+            const store = createMockStore({auth: {uid}});
             const action = startToggleTodo(testTodoRef.key, true);
             store.dispatch(action).then(() => {
                 const mockActions = store.getActions();
@@ -154,7 +160,7 @@ describe('Actions', () => {
         });
 
         it('should populate todos and dispatch ADD_TODOS', (done) => {
-            const store = createMockStore({});
+            const store = createMockStore({auth: {uid}});
             const action = startAddTodos();
             store.dispatch(action).then(() => {
                 const mockActions = store.getActions();
@@ -168,7 +174,7 @@ describe('Actions', () => {
         });
 
         it('should delete todo and dispatch DELETE_TODO action', (done) => {
-            const store = createMockStore({});
+            const store = createMockStore({auth: {uid}});
             const action = startDeleteTodo(testTodoRef.key);
             store.dispatch(action).then(() => {
                const mockActions = store.getActions();
