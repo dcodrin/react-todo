@@ -14,7 +14,6 @@ const checkLogin = (nextState, replace, next) => {
 };
 
 const redirectUser = (nextState, replace, next) => {
-    console.log(firebase.auth().currentUser);
     if (firebase.auth().currentUser) {
         replace('/todos');
     }
